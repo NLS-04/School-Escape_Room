@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d36e6c1a873521f46b7231338b6854b4
+guid: d0e3827f24914dd4285c2dc0c3ae90ce
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,10 +9,8 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Oxanium
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 82aa9b478c456b449810c30a983c8225, type: 3}
-  - {fileID: 12800000, guid: 20f7ca2fc728a0b48805d65c3ba00c7b, type: 3}
+  - Roboto Mono
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
