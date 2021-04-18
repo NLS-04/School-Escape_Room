@@ -1,0 +1,20 @@
+{
+    "segments": [
+        {
+            "id": 1,
+            "content": "CONTENT 1",
+            "textAnswer": "ANSWER 1",
+            "expectedAnswer": "EXPECTED 1"
+        },
+        {
+            "id": 2,
+            "content": "CONTENT 2",
+            "textAnswer": "ANSWER 2",
+            "expectedAnswer": "EXPECTED 2"
+        },
+        {
+            "id": 3,
+            "content": "CONTENT 3"
+        }
+    ]
+}
