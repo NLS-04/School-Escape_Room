@@ -31,7 +31,7 @@ public class TextWriter : MonoBehaviour
     void Update()
     {
         // Wen nicht getippt wird, wird das Tippgeräusch ausgeschaltet
-        if (typing == false && audioSource.isPlaying) {
+        if (!typing && audioSource.isPlaying) {
             audioSource.Stop();
         }
     }
