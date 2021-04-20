@@ -2,19 +2,51 @@
     "segments": [
         {
             "id": 1,
-            "content": "CONTENT 1",
-            "textAnswer": "ANSWER 1",
-            "expectedAnswer": "EXPECTED 1"
+            "content": "Content_1",
+            "textAnswer": "textAnswer_1",
+            "expectedAnswer": {
+                "isMultipleChoice": false,
+                "singleAnswer": "singleAnswer",
+                "multipleChoices": []
+            }
         },
         {
             "id": 2,
-            "content": "CONTENT 2",
-            "textAnswer": "ANSWER 2",
-            "expectedAnswer": "EXPECTED 2"
+            "content": "Content_2",
+            "textAnswer": "textAnswer_2",
+            "expectedAnswer": {
+                "isMultipleChoice": true,
+                "singleAnswer": "",
+                "multipleChoices": [
+                    {
+                        "sentence": "ChoiceSentence_1",
+                        "isCorrect": true
+                    },
+                    {
+                        "sentence": "ChoiceSentence_2",
+                        "isCorrect": false
+                    }
+                ]
+            }
         },
         {
             "id": 3,
-            "content": "CONTENT 3"
+            "content": "Content_3",
+            "textAnswer": "textAnswer_3",
+            "expectedAnswer": {
+                "isMultipleChoice": true,
+                "singleAnswer": "",
+                "multipleChoices": [
+                    {
+                        "sentence": "ChoiceSentence_1",
+                        "isCorrect": false
+                    },
+                    {
+                        "sentence": "ChoiceSentence_2",
+                        "isCorrect": true
+                    }
+                ]
+            }
         }
     ]
 }
