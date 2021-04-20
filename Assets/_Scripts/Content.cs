@@ -12,22 +12,10 @@ public class Content
 
     Dictionary<uint, TextSegment> textDict = new Dictionary<uint, TextSegment>();
 
-    public Content(bool doDebuging=false){
+    public Content(){
         jsonPath = Application.dataPath + relativPath;
         
         readParseJson(jsonPath, ref textDict);
-
-        if(doDebuging) {
-            TextSegment[] TS = new TextSegment[3] {
-                new TextSegment(1, "Content_1", "textAnswer_1", new Answer( false, sA:"singleAnswer")),
-                new TextSegment(2, "Content_2", "textAnswer_2", new Answer( true, mCs:new Choice[2] { new Choice("ChoiceSentence_1", true), new Choice("ChoiceSentence_2", false) } )),
-                new TextSegment(3, "Content_3", "textAnswer_3", new Answer( true, mCs:new Choice[2] { new Choice("ChoiceSentence_1", false), new Choice("ChoiceSentence_2", true) } ))
-            };
-
-            TextCollector TC = new TextCollector( TS );
-            foreach(var seg in TS) Debug.Log(seg);
-            writeToJson(jsonPath, TC);
-        }
     }
 
     // read the Text_Content.json and parses it into the textDict

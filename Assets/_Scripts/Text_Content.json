@@ -2,8 +2,8 @@
     "segments": [
         {
             "id": 1,
-            "content": "Content_1",
-            "textAnswer": "textAnswer_1",
+            "content": "Der Hohmann-Transfer ist ein energetisch günstiger Übergang zwischen zwei Bahnen um einen dominierenden Himmelskörper. Die Transfer-Ellipse (Hohmann-Bahn) verläuft sowohl zur Ausgangsbahn als auch zur Zielbahn tangential; dort ist jeweils ein Kraftstoß (kick burn) nötig, um die Geschwindigkeit anzupassen. Eine solche Skizze findet sich bereits um 1911 bei Ziolkowski.",
+            "textAnswer": "yesn't",
             "expectedAnswer": {
                 "isMultipleChoice": false,
                 "singleAnswer": "singleAnswer",

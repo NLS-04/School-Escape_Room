@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TextWriter : MonoBehaviour
 {
     //Gibt die Tippgeschwindigkeit in Sekunden an
-    [Range(0f, 50f)]
+    [Range(0f, 1f)]
     public float speed;
 
     //Attribut, das angibt ob gerade Buchstaben auf den Bildschirm getippt werden.
@@ -44,42 +44,43 @@ public class TextWriter : MonoBehaviour
     // not work, needed: Coroutine management/timing :)
     void writeSegment(uint id) {
         TextSegment segment = contents.GetTextSegment(id);
-        writeText(segment.content, contentText);
-        writeText(segment.textAnswer, answerText);
+        StartCoroutine( Type( new string[2] {segment.content, segment.textAnswer}, new Text[2] {contentText, answerText} ) );
     }
 
     //Methode zum Anzeigen von Text auf dem Computerbildschirm
     void writeText(string text, Text txtchannel) {
-
         //Typing wird auf true gesetzt, damit das Audio nicht abgebrochen wird
         typing = true;
 
-        //Das Audio wird gestartet
         audioSource.Play();
 
-        //Die Coroutine zur Darstellung des Textes wird gestartet
-        StartCoroutine(Type(text, txtchannel));
+        StartCoroutine( Type( new string[1] {text}, new Text[1] {txtchannel} ) );
     }
 
     //Coroutine, die f�r die eigentliche Darstellung des Textes verantwortlich ist.
-    IEnumerator Type(string text, Text txtchannel){
+    IEnumerator Type(string[] texts, Text[] channels){
+        if(texts.Length==0 || channels.Length==0 || texts.Length != channels.Length) yield return null;
+
         //Der Counter gibt die Anzahl der Zeichen des Strings text an die bereits auf dem Bildschirm angezeigt werden
         int counter = 0;
+        char[][] chArray = new char[2][] {texts[0].ToCharArray(), texts[1].ToCharArray()};
 
-        char[] chArray = text.ToCharArray();
+        for(int i=0; i<texts.Length; i++) {
+            counter=0;
+            
+            //Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugefügt
+            foreach (char letter in chArray[i]) {
+                counter++;
 
-        //Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugef�gt
-        foreach (char letter in chArray) {
-            counter++;
+                channels[i].text += letter;
 
-            contentText.text += letter;
+                // Wenn alle Zeichen dargestellt werden, wird typing auf false gesetzt damit das Audio abbricht
+                if (counter >= chArray[i].Length)
+                    typing = false;
 
-            // Wenn alle Zeichen dargestellt werden, wird typing auf false gesetzt damit das Audio abbricht
-            if (counter >= chArray.Length)
-                typing = false;
-
-            //Es wird gewartet; Wartedauer = Tippgeschwindigkeit
-            yield return new WaitForSeconds(speed);
+                //Es wird gewartet; Wartedauer = Tippgeschwindigkeit
+                yield return new WaitForSeconds(speed);
+            }
         }
     }
 
