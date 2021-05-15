@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f2bfd9493b975a41b58aeff6a56151d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.09
+  speed: 0.25
   pages: 2
   screenText: {fileID: 1785591561}
   continue_button: {fileID: 20323792}
