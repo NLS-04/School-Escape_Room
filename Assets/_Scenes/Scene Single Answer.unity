@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 97017728}
   - component: {fileID: 97017727}
   - component: {fileID: 97017731}
+  - component: {fileID: 97017732}
   m_Layer: 0
   m_Name: Bildschirmfehler
   m_TagString: Untagged
@@ -322,7 +323,7 @@ VideoPlayer:
   m_TargetMaterialProperty: _MainTex
   m_RenderMode: 3
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources:
@@ -339,6 +340,18 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &97017732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97017726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79ca5a4a21419654095a977f4565685c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &305737443
 GameObject:
   m_ObjectHideFlags: 0
