@@ -84,9 +84,7 @@ public class Answer {
         if(!isMultipleChoice) return $"\tsingleAnswer:{singleAnswer}";
         else {
             string output = "\tChoice:[\n\t\t";
-            foreach(Choice choi in multipleChoices) {
-                output += choi.ToString() + ";\n\t\t";
-            }
+            foreach(Choice choi in multipleChoices) output += choi.ToString() + ";\n\t\t";
             return output.Remove(output.Length-4, 4) + "\n\t]";
         }
     }
