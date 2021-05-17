@@ -115,7 +115,7 @@ public class TextWriter : MonoBehaviour
             StartCoroutine( Type( new string[1] {text}, new TMP_Text[1] {txtchannel}, activateAnsObj:activateAnsObj ) );
         }
 
-        //Coroutine, die f�r die eigentliche Darstellung des Textes verantwortlich ist.
+        //Coroutine, die fuer die eigentliche Darstellung des Textes verantwortlich ist.
         IEnumerator Type(string[] texts, TMP_Text[] channels, bool activateAnsObj=false){
             if( texts.Length != channels.Length || texts.Length == 0 ) yield return null;
 
@@ -137,7 +137,7 @@ public class TextWriter : MonoBehaviour
             }
 
             typing = false;
-            // Wen nicht getippt wird, wird das Tippger�usch ausgeschaltet
+            // Wenn nicht getippt wird, wird das Tippger�usch ausgeschaltet
             if (audioSource.isPlaying) audioSource.Stop();
             if (activateAnsObj && !(answerGameObj is null) ) answerGameObj.SetActive(true);            
         }
