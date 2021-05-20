@@ -11,7 +11,7 @@ public class GameOverMenuManager : MonoBehaviour
     public TMP_Text screenText;
     private AudioSource audio;
 
-    // Start is called before the first frame update
+ 
     void Start()
     {
         audio = GetComponent<AudioSource>();
@@ -47,7 +47,7 @@ public class GameOverMenuManager : MonoBehaviour
         }
     }
 
-    //Methode, die beim klicken des Buttons ausgeführt wird (Spiel starten)
+    //Methode, die beim klicken des Buttons ausgeführt wird (Es wird zurück zum Hauptmenü gegangen)
     public void goToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
