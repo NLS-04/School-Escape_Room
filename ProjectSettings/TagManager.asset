@@ -7,6 +7,8 @@ TagManager:
   - ContentText
   - AnswerText
   - AnswerGameObj
+  - BattText
+  - BattSprite
   layers:
   - Default
   - TransparentFX
