@@ -9,7 +9,7 @@ public class StoryTextWriter : MonoBehaviour
     //Gibt die Tippgeschwindigkeit in Sekunden an
     public float speed;
 
-    //Gibt an wie viele Seiten Story angezeigt werden müssen
+    //Gibt an wie viele Seiten Story angezeigt werden mï¿½ssen
     public int pages;
 
     //Nummer der aktuell angezeigten Seite
@@ -25,7 +25,7 @@ public class StoryTextWriter : MonoBehaviour
         current_page = 1;
 
         //Debug
-        writeText("\nMoin du Nudel! Hier könnte deine Story stehen!");
+        writeText("\nMoin du Nudel! Hier kï¿½nnte deine Story stehen!");
     }
 
     //Methode zum Anzeigen von Text auf dem Computerbildschirm
@@ -35,11 +35,11 @@ public class StoryTextWriter : MonoBehaviour
         StartCoroutine(Type(text));
     }
 
-    //Coroutine, die für die eigentliche Darstellung des Textes verantwortlich ist.
+    //Coroutine, die fï¿½r die eigentliche Darstellung des Textes verantwortlich ist.
     IEnumerator Type(string text)
     {
         int counter = 0; 
-        //Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugefügt
+        //Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugefï¿½gt
         foreach (char letter in text.ToCharArray())
         { 
             screenText.text += letter;
@@ -58,17 +58,17 @@ public class StoryTextWriter : MonoBehaviour
         current_page++;
         if (current_page <= pages)
         {
-            //Der Text wird zurückgesetzt und der Button deaktiviert
+            //Der Text wird zurï¿½ckgesetzt und der Button deaktiviert
             screenText.text = "";
             continue_button.SetActive(false);
 
-            //TODO: Nächste Seite wird angezeigt
+            //TODO: Nï¿½chste Seite wird angezeigt
 
             //Debug
-            writeText("Das ist die nächste Seite");
+            writeText("Das ist die nï¿½chste Seite");
 
-        }else {
-            // Wenn alle Story Seiten angezeigt wurden wird die nächste Szene geladen
+        } else {
+            // Wenn alle Story Seiten angezeigt wurden wird die nï¿½chste Szene geladen
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

@@ -12,12 +12,12 @@ public class BatteryManager : MonoBehaviour
     //Die Zeit in Sekunden, die es dauert bis sich der Batterieladestand um 1 verringert
     private float time_per_percent = 20f;
 
-    //Zählt wie oft bereits ein Prozent auf Grund der Zeit abgezogen wurde
+    //Zï¿½hlt wie oft bereits ein Prozent auf Grund der Zeit abgezogen wurde
     private int counter = 0;
 
     private float percent_per_wrong_answer = 5f;
 
-    //Gibt an, ob die Entladung der Batterie gestartet ist (mit Beginn des ersten Rätsels)
+    //Gibt an, ob die Entladung der Batterie gestartet ist (mit Beginn des ersten Rï¿½tsels)
     private bool countdownStarted = false;
 
     //Zeitpunkt bei dem die Entladung der Batterie startet
@@ -29,9 +29,7 @@ public class BatteryManager : MonoBehaviour
     private TMP_Text batt_text;
 
 
-    void Start()
-    {
-        DontDestroyOnLoad(this);
+    void Start() {
         batt_sprite = GameObject.FindGameObjectWithTag("BattSprite").GetComponent<SpriteRenderer>();
         batt_text = GameObject.FindGameObjectWithTag("BattText").GetComponent<TMP_Text>();
 
@@ -39,17 +37,12 @@ public class BatteryManager : MonoBehaviour
         startCountdown();
     }
 
-    void Update()
-    {
+    void Update() {
         if (countdownStarted){
             if (Time.time > counter * time_per_percent + startTime) {
                 counter++;
                 battery_percentage--;
                 updateBattery();
-            }
-
-            if (battery_percentage <= 0) {
-                gameOver();
             }
         }
     }
@@ -68,28 +61,17 @@ public class BatteryManager : MonoBehaviour
         SceneManager.LoadScene("GameOver");
         battery_percentage = 100f;
         Destroy(gameObject);
-
     }
 
     private void updateBattery() {
-        batt_text.text = Mathf.RoundToInt(battery_percentage).ToString() + " %";
+        if (battery_percentage <= 0) 
+            gameOver();
 
-        if (battery_percentage <= 25f)
-        {
-            batt_sprite.sprite = batt_sprites[3];
-        }
-        else if (battery_percentage <= 50f)
-        {
-            batt_sprite.sprite = batt_sprites[2];
-        }
-        else if (battery_percentage <= 75f)
-        {
-            batt_sprite.sprite = batt_sprites[1];
-        }
-        else if (battery_percentage == 0)
-        {
-            batt_sprite.sprite = batt_sprites[4];
-        }
-    
+        batt_text.text = Mathf.RoundToInt(battery_percentage).ToString() + " %";
+        batt_text.color = Color.Lerp(Color.red, Color.green, 0.01f*battery_percentage);
+        
+        // why this formular works: https://www.desmos.com/calculator/9vsolgfbw4
+        batt_sprite.sprite = batt_sprites[ Mathf.FloorToInt( 4 - .04f*battery_percentage ) ];
     }
+
 }

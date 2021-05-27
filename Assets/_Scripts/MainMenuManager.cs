@@ -15,7 +15,7 @@ public class MainMenuManager : MonoBehaviour
     void Start()
     {
         audio = GetComponent<AudioSource>();
-        writeText("Willkommen bei Spielname XY!");
+        writeText("");
         startGameButton.SetActive(false);
     }
 
@@ -26,11 +26,11 @@ public class MainMenuManager : MonoBehaviour
         StartCoroutine(Type(text));
     }
 
-    //Coroutine, die für die eigentliche Darstellung des Textes verantwortlich ist.
+    //Coroutine, die fï¿½r die eigentliche Darstellung des Textes verantwortlich ist.
     IEnumerator Type(string text)
     {
         int counter = 0;
-        //Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugefügt
+        //Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugefï¿½gt
         foreach (char letter in text.ToCharArray())
         {
             screenText.text += letter;
@@ -47,7 +47,7 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    //Methode, die beim klicken des Buttons ausgeführt wird (Spiel starten)
+    //Methode, die beim klicken des Buttons ausgefï¿½hrt wird (Spiel starten)
     public void startGame() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
