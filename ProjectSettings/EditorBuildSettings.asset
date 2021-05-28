@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Scenes/Awake.unity
+    guid: e76d302015de99e43a95f6dcad92099a
+  - enabled: 1
     path: Assets/_Scenes/MainMenu.unity
     guid: 026030f1bf8decb4fb2341c24bd1564f
   - enabled: 1
     path: Assets/_Scenes/StoryScene.unity
     guid: 18214c442c0ffff46976f5eba83edcb7
   - enabled: 1
-    path: Assets/_Scenes/Scene Single Answer.unity
-    guid: 08506809907416e44a79e15ee8c030b1
-  - enabled: 1
     path: Assets/_Scenes/GameOver.unity
     guid: 1d31525eedad92949aae6e99ea5b1623
+  - enabled: 1
+    path: Assets/_Scenes/Scene Single Answer.unity
+    guid: 08506809907416e44a79e15ee8c030b1
   m_configObjects: {}
