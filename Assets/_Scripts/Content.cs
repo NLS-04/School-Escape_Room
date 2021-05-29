@@ -5,10 +5,9 @@ using UnityEngine;
 
 #nullable enable
 
-public class Content
-{
+public class Content {
     string jsonPath;
-    public readonly string relativPath = "/_Scripts/Text_Content.json";
+    public const string relativPath = "/_Scripts/Text_Content.json";
 
     Dictionary<uint, TextSegment> textDict = new Dictionary<uint, TextSegment>();
 
@@ -18,7 +17,7 @@ public class Content
         readParseJson(jsonPath, ref textDict);
     }
 
-    // read the Text_Content.json and parses it into the textDict
+    /// read the Text_Content.json and parses it into the textDict
     public void readParseJson(string path, ref Dictionary<uint, TextSegment> temp) {
         using (StreamReader sr = new StreamReader(path)) {
             string json = sr.ReadToEnd();
@@ -33,16 +32,19 @@ public class Content
         }
     }
 
-    // write to Text_Content.json a TextCollector
-    private void writeToJson(string path, TextCollector content) {
+    /// write to Text_Content.json a TextCollector
+    void writeToJson(string path, TextCollector content) {
         string json = JsonUtility.ToJson(content, true);
         File.WriteAllText(path, json);
     }
 
-    // returns a Textsegment or null for a given id
+    /// returns a Textsegment or null for a given id
     public TextSegment? GetTextSegment(uint segmentID) {
-        if ( !textDict.ContainsKey(segmentID) ) return null;
-        return textDict[segmentID];
+        return textDict.ContainsKey(segmentID) ? textDict[segmentID] : null;
+    }
+
+    public int GetSegmentAmount() {
+        return textDict.Count;
     }
 
     [Serializable]
@@ -50,40 +52,46 @@ public class Content
         public TextSegment[] segments;
 
         public TextCollector(TextSegment[] s) { segments = s; }
+        public override string ToString() {
+            string output = "";
+            foreach (TextSegment ts in segments) output += ts.ToString() + "\n";
+            return output;
+        }
     }
 }
 
 [Serializable]
 public class TextSegment {
-    public uint id;
-    public string content;
-    public string textAnswer;
-    public Answer answer;
+    public uint id;             /// scalar identifier, segments will be worked thru in chronologically order
+    public string content;      /// string containing the Text/Content of that Segment
+    public string textAnswer;   /// string containing the Text to which the user gives an anwser
+    public Answer answer;       /// this Segments Answer
     
     public TextSegment(uint xid, string c, string tA, Answer a) {
         id=xid; content=c; textAnswer=tA; answer=a;
     }
+
     public override string ToString() {
-        return $"id:{id}, content:{content}, textAnswer:{textAnswer}, expectedAnswer:{{\n{answer}\n}}";
+        return $"id: {id}, content: {content}, textAnswer: {textAnswer}, answer: {{\n{answer}\n}}";
     }
 }
 
 [Serializable]
 public class Answer {
-    public bool isMultipleChoice;
-    public string?   singleAnswer;
-    public Choice?[] multipleChoices;
+    public bool      isMultipleChoice;  /// indicating of this Answer instance is a single sentence or multiple Choice Answer
+    public string?   singleAnswer;      /// single Answer Sentence which is to be expected
+    public Choice?[] multipleChoices;   /// Multiple Choice Answer which is to be expected
 
     public Answer(bool iMC, string? sA=null, Choice?[] mCs=null) {
         isMultipleChoice = iMC;
-        singleAnswer = sA;
-        multipleChoices = mCs;
+        singleAnswer     = sA;
+        multipleChoices  = mCs;
     }
 
     public override string ToString() {
-        if(!isMultipleChoice) return $"\tsingleAnswer:{singleAnswer}";
+        if(!isMultipleChoice) return $"\tsingleAnswer: {singleAnswer}";
         else {
-            string output = "\tChoice:[\n\t\t";
+            string output = "\tChoice: [\n\t\t";
             foreach(Choice choi in multipleChoices) output += choi.ToString() + ";\n\t\t";
             return output.Remove(output.Length-4, 4) + "\n\t]";
         }
@@ -92,15 +100,15 @@ public class Answer {
 
 [Serializable]
 public class Choice {
-    public string sentence;
-    public bool isCorrect;
+    public string sentence;  /// displays an Text which the user can select
+    public bool isCorrect;   /// determins if this Choice is to be selected (i.e. correct) or not 
 
     public Choice(string s, bool i){
-        sentence=s;
-        isCorrect=i;
+        sentence=s; isCorrect=i;
     }
 
     public override string ToString() {
-        return $"isCorrect:{isCorrect}, sentence:{sentence}";
+        string t = "True "; string f = "False";
+        return $"isCorrect: {(isCorrect?t:f)}, sentence: {sentence}";
     }
 }

@@ -76,7 +76,7 @@ public class BatteryManager : MonoBehaviour
     void gameOver() {
         stop();
         battery_percentage = default_batt_percentage;
-        textWriter.changeSceneToIndex( TextWriter.SCENE_GAME_OVER ); //* initiate the Game Over Scene
+        textWriter.changeSceneToIndex( TextWriter.SCENE.GAME_OVER ); //* initiate the Game Over Scene
     }
 
     /// update new battery percentage/state to other dependencies

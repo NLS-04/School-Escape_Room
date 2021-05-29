@@ -359,9 +359,12 @@ MonoBehaviour:
   contentText: {fileID: 0}
   answerText: {fileID: 0}
   answerGameObj: {fileID: 0}
+  mcAnsGameObj: {fileID: 0}
+  mcAnswers: []
   checkButton: {fileID: 0}
   audioSource: {fileID: 1457829995}
   battManager: {fileID: 1457829996}
+  MultipleChoiceObj: {fileID: 197417475721311413, guid: 5ee79e8a08eefa94cb2dd575d044dda1, type: 3}
   segmentNumber: 0
   SCENE_IDENTIFIER: 0
 --- !u!4 &1457829998

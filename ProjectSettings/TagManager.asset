@@ -9,6 +9,8 @@ TagManager:
   - AnswerGameObj
   - BattText
   - BattSprite
+  - MultipleChoice
+  - A
   layers:
   - Default
   - TransparentFX
