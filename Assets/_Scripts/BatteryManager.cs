@@ -58,6 +58,7 @@ public class BatteryManager : MonoBehaviour
     public void endSceneChange() {
         isInSceneSwitch = false;
         searchForGameObj();
+        updateBattery();
     }
 
     /// method to reduce the percentage, because of a wrong answer

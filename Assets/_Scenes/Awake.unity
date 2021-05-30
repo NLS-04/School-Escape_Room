@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1457829998}
   - component: {fileID: 1457829997}
+  - component: {fileID: 1457829999}
   - component: {fileID: 1457829996}
   - component: {fileID: 1457829995}
   m_Layer: 0
@@ -235,7 +236,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c5a4003d82dc4174fb8b58b3899dd3b1, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -353,7 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74650c083437bc4394663901f1719f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charFrequency: 50
+  charFrequency: 400
+  charWaitSeconds: 0
   typing: 0
   activateAnsObjOnLoad: 0
   contentText: {fileID: 0}
@@ -362,10 +364,29 @@ MonoBehaviour:
   mcAnsGameObj: {fileID: 0}
   mcAnswers: []
   checkButton: {fileID: 0}
+  sounds:
+  - name: 0
+    clip: {fileID: 8300000, guid: c5a4003d82dc4174fb8b58b3899dd3b1, type: 3}
+    oneShot: 0
+  - name: 2
+    clip: {fileID: 8300000, guid: 2fbda0b04f7c4074d8cf69af2193a494, type: 3}
+    oneShot: 1
+  - name: 1
+    clip: {fileID: 8300000, guid: 579ed7a67e971e24489093811e670655, type: 3}
+    oneShot: 1
   audioSource: {fileID: 1457829995}
   battManager: {fileID: 1457829996}
   MultipleChoiceObj: {fileID: 197417475721311413, guid: 5ee79e8a08eefa94cb2dd575d044dda1, type: 3}
   segmentNumber: 0
+  segment:
+    id: 0
+    content: 
+    textAnswer: 
+    answer:
+      isMultipleChoice: 0
+      singleAnswer: 
+      multipleChoices: []
+  contents: {fileID: 1457829999}
   SCENE_IDENTIFIER: 0
 --- !u!4 &1457829998
 Transform:
@@ -381,3 +402,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1457829999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457829994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a6fd301a97a644da0cccc9e4bafcc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

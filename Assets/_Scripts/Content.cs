@@ -2,33 +2,46 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
 #nullable enable
 
-public class Content {
-    string jsonPath;
-    public const string relativPath = "/_Scripts/Text_Content.json";
-
+[Serializable]
+public class Content : MonoBehaviour {
+    string jsonPath, yandere;
+    public const string filename = "Text_Content.json";
+    
     Dictionary<uint, TextSegment> textDict = new Dictionary<uint, TextSegment>();
 
-    public Content(){
-        jsonPath = Application.dataPath + relativPath;
+    public void Start() {
+        jsonPath = System.IO.Path.Combine(Application.streamingAssetsPath, filename);
+        StartCoroutine( makeRequest() );
+    }
+
+    IEnumerator<UnityWebRequestAsyncOperation> makeRequest() {
+        UnityWebRequest req = UnityWebRequest.Get(jsonPath);
+        yield return req.SendWebRequest();
+
+        if( !(req.isNetworkError || req.isHttpError) )
+            parseJsonString(req.downloadHandler.text, ref textDict);
+        else
+            Debug.LogError(req.error);
+    }
+
+    public void parseJsonString(string json, ref Dictionary<uint, TextSegment> temp) {
+        TextCollector collector = JsonUtility.FromJson<TextCollector>(json);
+
+        if (collector.segments is null) return;
         
-        readParseJson(jsonPath, ref textDict);
+        foreach(TextSegment segment in collector.segments)
+            textDict.Add(segment.id, segment);
     }
 
     /// read the Text_Content.json and parses it into the textDict
     public void readParseJson(string path, ref Dictionary<uint, TextSegment> temp) {
         using (StreamReader sr = new StreamReader(path)) {
             string json = sr.ReadToEnd();
-
-            TextCollector collector = JsonUtility.FromJson<TextCollector>(json);
-
-            if (collector.segments is null) return;
-            
-            foreach(TextSegment segment in collector.segments) {
-                textDict.Add(segment.id, segment);
-            }
+            parseJsonString(json, ref temp);
         }
     }
 

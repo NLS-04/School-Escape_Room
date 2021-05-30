@@ -5,12 +5,25 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Linq;
+
+[Serializable]
+public class Sound {
+    public SOUND name;
+    public AudioClip clip;
+    public bool oneShot;
+}
+
+public enum SOUND {
+    typing,
+    correct,
+    incorrect
+}
 
 public class TextWriter : MonoBehaviour {
     [Header("User Settables")]
-    [Range(0, 50)]
-    [SerializeField] uint charFrequency;  /// frequency char print for text displays
-    float charWaitSeconds;                /// reciprocal of the frequency, i.e. the time to wait in seconds between two chars
+    [SerializeField] uint charFrequency;    /// frequency char print for text displays
+    [SerializeField] float charWaitSeconds; /// reciprocal of the frequency, i.e. the time to wait in seconds between two chars
 
     [SerializeField] bool typing;               /// Attribut, das angibt ob gerade Buchstaben auf den Bildschirm getippt werden.
     [SerializeField] bool activateAnsObjOnLoad; /// should the Answer Obj be activated after Scene Loads
@@ -29,46 +42,56 @@ public class TextWriter : MonoBehaviour {
 
 
     [Space, Header("Script Specifics")]
+    [SerializeField] Sound[] sounds;
     [SerializeField] AudioSource audioSource;
     [SerializeField] BatteryManager battManager;
     [SerializeField] GameObject MultipleChoiceObj;
+    // [SerializeField] Json;
 
 
     [Space, Header("State Indecators")]
     [SerializeField] uint segmentNumber;    /// scalar refrence to the current Segment
     [SerializeField] TextSegment segment;   /// current content Segment which the player is solving
-    Content contents;                       /// contents for the Scenes containing the riddles
+    [SerializeField] Content contents;      /// contents for the Scenes containing the riddles
     bool isTextAnswer;                      /// indicates whether the current Segment is multiple or single Answer
 
 
     #region Scene management
+        public static class TAG {
+            public const string CONTENT_TEXT    = "ContentText";
+            public const string ANSWER_TEXT     = "AnswerText";
+            public const string ANSWER_GAMEOBJ  = "AnswerGameObj";
+            public const string MULTIPLE_CHOICE = "MultipleChoice";
+        }
+
         //* static variables indicating in wich Scene/State we currently are
         //! Scene values MUST match with the corresponding BUILD INDEX
         public enum SCENE {
             AWAKE           = 0,  /// starting Scene, only called when App gets launched to asure to only load up the GAME_MANAGER Obj once
             MAIN_MENU       = 1,  /// Main Menu Scene, where you can start the Game
             STORY           = 2,  /// tells the Story this game underlies
-            GAME_OVER       = 3,  /// Scene where the game pre ends due to an empty battery
-            SINGLE_ANSWER   = 4,  /// Scene for Single Answer Segments
-            MULTIPLE_ANSWER = 5,  /// Scene for Multiple Choise Answer Segments
+            EMPTY_SCREEN    = 3,  /// Post Story Content which is displayed on the screen
+            GAME_OVER       = 4,  /// Scene where the game pre ends due to an empty battery
+            SINGLE_ANSWER   = 5,  /// Scene for Single Answer Segments
+            MULTIPLE_ANSWER = 6,  /// Scene for Multiple Choise Answer Segments
 
                 //! GAME_ENEDED MUST be {10*GAME_OVER} since they point to the same SCENE
                 //! but MUSTN'T be the same or else SCENE_CONTENTS can't distinguish between them
-            GAME_ENDED      = 30  /// Scene where the game ends after solving all Segments
+            GAME_ENDED = 10*GAME_OVER  /// Scene where the game ends after solving all Segments
         }
 
         static int _sceneAmount = Enum.GetNames(typeof(SCENE)).Length;  // the amount of referendable scenes, e.g MAIN_MENU, ...
 
-        public const string TAG_CONTENT_TEXT    = "ContentText";
-        public const string TAG_ANSWER_TEXT     = "AnswerText";
-        public const string TAG_ANSWER_GAMEOBJ  = "AnswerGameObj";
-        public const string TAG_MULTIPLE_CHOICE = "MultipleChoice";
-
-        static readonly string[] STORY_CONTENTS = {"\nMoin du Nudel! Hier könnte deine Story stehen!", "Das ist die nächste Seite"};
-        static readonly Dictionary<SCENE, string> SCENE_CONTENTS = new Dictionary<SCENE, string>(_sceneAmount) {
-            { SCENE.MAIN_MENU , "Willkommen bei Spielname XY!" },
-            { SCENE.GAME_OVER , "Game Over!" },
-            { SCENE.GAME_ENDED, "Herzlichen Glückwunsch!\n\nDu hast alle Rätsel erfolgreich absolviert und gezeigt,\ndass du dich in den mathematischen Künsten der 11. Jahrgangsstufe bewähren kannst" }
+        public static readonly Dictionary<SCENE, string> SCENE_CONTENTS = new Dictionary<SCENE, string>(_sceneAmount) {
+            { SCENE.MAIN_MENU ,     "Willkommen bei Spielname XY!" },
+            { SCENE.GAME_OVER ,     "Game Over!" },
+            { SCENE.GAME_ENDED,     "Herzlichen Glückwunsch!\n\nDu hast alle Rätsel erfolgreich absolviert und gezeigt,\ndass du dich in den mathematischen Künsten der 11. Jahrgangsstufe bewähren kannst" },
+            { SCENE.EMPTY_SCREEN,   "Hallo Fremder! Wenn du das hier liest, bin ich längst tot. Ich war viele Jahre ein erfolgreicher Abenteurer und Entdecker. Die Schätze, die ich auf diesen Reisen gefunden habe, möchte ich einer Person vererben die, dieser Schätze würdig ist. Dafür habe ich dich ausgesucht. Die Schätze sind irgendwo in diesem Haus versteckst. Bevor du sie aber erhältst musst du dich in mehreren Prüfungen und Rätseln beweisen. Dieser Computer (und die in der Kiste liegenden Unterlagen) werden dir dabei helfen die Prüfungen zu bestehen. Bedenke, dass sowohl deine Zeit als auch deine Lösungsversuche durch die Batterie dieses Computers begrenzt sind. Viel Glück!" }
+        };
+        public static readonly string[] STORY_CONTENTS = {
+            "Vor ein paar Tagen erhieltst du überraschend ein Schreiben. Zuerst dachtest du, dass dieser Brief ein Fehler war, denn es wurde dir mitgeteilt, dass einer deiner entfernten Verwandten verstorben war und dass du damit der Erbe eines alten Hauses geworden bist. Da dir der Name dieser Person unbekannt ist, triffst du die Entscheidung das Haus dieses mysteriösen Verwandten zu besuchen um mehr über diesen Menschen herauszufinden.",
+            "Kurze Zeit später stehst du vor einer alten, verwahrlosten Villa am Stadtrand. Kaum vorstellbar, dass hier bis vor kurzem noch jemand gewohnt hat! Als du das Haus betrittst stellst du überrascht fest, dass das Haus komplett leer ist. In keinem Raum der Villa stehen Möbel oder Gegenstände deines vermeintlichen Verwandten. Nachdem du alle Räum durchsucht hast, entscheidest du dich noch einen Blick auf den Dachboden zu werfen. Als du den Dachboden erreichst, dachtest du im ersten Moment, dass auch dieser vollkommen leer ist. Jedoch entdeckst du in einer Ecke des beengten Raums eine große Holztruhe.",
+            "Du näherst dich der Kiste und öffnest den schweren Deckel. Mit großer Überraschung begutachtest du den Inhalt. Neben einem Stapel von alten Dokumenten befindet sich in der Truhe ein alter Computer der über ein Netz aus Kabeln mit einer überdimensionalen Batterie verbunden ist. Du hebst den Computer aus der Kiste und stellt ihn auf den knarzenden Holzboden. Nach einer kurzen Suche findest du an dem grauen Kasten einen Einschaltknopf. Als du die Taste drückst fängt der Computer an zu Surren und zeigt auf seinem Bildschirm eine Botschaft deines Verwandten an…"
         };
 
         [SerializeField] 
@@ -83,11 +106,7 @@ public class TextWriter : MonoBehaviour {
     }
 
     void Start() {
-        // Gather the contents (Segments) for the Scenes
-        contents = new Content();
-
-        playTypeSound(false);
-
+        typing = false;
         changeSceneToIndex( SCENE.MAIN_MENU );  // since we are in the Awake_Scene we must switch to the Main_Menu_Scene
     }
 
@@ -112,10 +131,10 @@ public class TextWriter : MonoBehaviour {
 
     #region SCENES MANAGMENT
         void getSceneRelevantObj() {
-            answerGameObj = GameObject.FindWithTag( TAG_ANSWER_GAMEOBJ );
+            answerGameObj = GameObject.FindWithTag( TAG.ANSWER_GAMEOBJ );
 
-            channelDictonary["contentText"] = contentText = tmpTextOrNull( TAG_CONTENT_TEXT );  //* add the Scenes current contentTexts: TMPText Component or NULL
-            channelDictonary["answerText"]  = answerText  = tmpTextOrNull( TAG_ANSWER_TEXT );   //* add the Scenes current answerTexts: TMPText Component or NULL
+            channelDictonary["contentText"] = contentText = tmpTextOrNull( TAG.CONTENT_TEXT );  //* add the Scenes current contentTexts: TMPText Component or NULL
+            channelDictonary["answerText"]  = answerText  = tmpTextOrNull( TAG.ANSWER_TEXT );   //* add the Scenes current answerTexts: TMPText Component or NULL
 
             if (answerGameObj is null)
                 return; //=> break HERE out if there is NO AnwerGameObj in this scene and (so no button can be set an onClick.Event)
@@ -146,7 +165,7 @@ public class TextWriter : MonoBehaviour {
         void multipleChoiceSetup() {
             //* shortly activate the inputGameObject so that the Multiple Choice Holder can be found
             answerGameObj.SetActive(true);
-            mcAnsGameObj = GameObject.FindWithTag( TAG_MULTIPLE_CHOICE );
+            mcAnsGameObj = GameObject.FindWithTag( TAG.MULTIPLE_CHOICE );
             answerGameObj.SetActive(activateAnsObjOnLoad);
 
             mcAnswers = new MCToggle[segment.answer.multipleChoices.Length];
@@ -189,13 +208,15 @@ public class TextWriter : MonoBehaviour {
                 }
 
                 STORY_INDEX = 0;
-
-                segmentChoice( 1 );  // 'preview' the first scene to setup the segment data
+                SCENE_IDENTIFIER = SCENE.EMPTY_SCREEN;
             } else {
                 //: Current Scene is not the story Scene ==> Switch to according Scene
-                if      ( SCENE_IDENTIFIER == SCENE.MAIN_MENU ) SCENE_IDENTIFIER = SCENE.STORY;
-                else if ( SCENE_IDENTIFIER == SCENE.GAME_OVER
-                        ||SCENE_IDENTIFIER == SCENE.GAME_ENDED) SCENE_IDENTIFIER = SCENE.MAIN_MENU;
+                switch( SCENE_IDENTIFIER ) {
+                    case SCENE.MAIN_MENU:    SCENE_IDENTIFIER = SCENE.STORY;     break;
+                    case SCENE.GAME_OVER:    SCENE_IDENTIFIER = SCENE.MAIN_MENU; break;
+                    case SCENE.GAME_ENDED:   SCENE_IDENTIFIER = SCENE.MAIN_MENU; break;
+                    case SCENE.EMPTY_SCREEN: segmentChoice( 1 ); break;  // 'preview' the first scene to setup the segment data and the current state
+                }
             }
 
             initiateLoadLevel();
@@ -237,6 +258,8 @@ public class TextWriter : MonoBehaviour {
 
         public void checkAnswer() {
             bool oldIsText = isTextAnswer;
+
+            playSound(SOUND.correct);
             
             if (isTextAnswer) {
                 TMP_InputField inputField = answerGameObj.GetComponentInChildren<TMP_InputField>();
@@ -244,7 +267,7 @@ public class TextWriter : MonoBehaviour {
                 //* is NOT inputed answer equal to expected answer, disregarding Casings
                 if( ! inputField.text.Equals(segment.answer.singleAnswer, System.StringComparison.CurrentCultureIgnoreCase) ) {
                     inputField.text = "~ WRONG ~";
-                    battManager.wrongAnswer();
+                    wrongAnswerAction();
                     return; //=> break HERE out to not futher execute code
                 }
 
@@ -253,17 +276,16 @@ public class TextWriter : MonoBehaviour {
                 //* scan that every Multiple Choice Answers is correctly selected by the user and return if other wise
                 foreach ( MCToggle mct in mcAnswers ) {
                     if ( !mct.doesInputEqualChoice() ) {
-                        //todo add some user feedback that his answer was wrong: e.g. some visuals like red color etc
-                        battManager.wrongAnswer();
+                        StartCoroutine( multipleChoiceWrongFeedBack() );
+                        wrongAnswerAction();
                         return; //=> break HERE out to not futher execute code
                     }
                 }
 
                 // remove and reset the whole scene setup
                 mcAnswers = null;
-                for ( int i = 0; i < mcAnsGameObj.transform.childCount; i++ ) {
-                    Destroy( mcAnsGameObj.transform.GetChild(i).gameObject );
-                }
+                foreach(Transform MCchild in getMCchildren<Transform>())
+                    Destroy( MCchild.gameObject );
             }
 
             segmentChoice(++segmentNumber);
@@ -279,6 +301,37 @@ public class TextWriter : MonoBehaviour {
             segmentReset();
             if ( !isTextAnswer ) multipleChoiceSetup();
         }
+
+        void wrongAnswerAction() {
+            battManager.wrongAnswer();
+            playSound(SOUND.incorrect);
+        }
+
+        T[] getMCchildren<T>() {
+            T[] GOs = new T[ mcAnsGameObj.transform.childCount ];
+            for ( int i = 0; i < GOs.Length; i++ )
+                GOs[i] = mcAnsGameObj.transform.GetChild(i).gameObject.GetComponent<T>();
+            return GOs;
+        }
+
+        IEnumerator multipleChoiceWrongFeedBack( int times=2, float waitTime=0.1f ) {
+            Image[]  childrenImgs    = getMCchildren<Image>();
+            Toggle[] childrenToggles = getMCchildren<Toggle>();
+            Color save = childrenImgs[0].color;  // Original Color to be reverted to
+            
+            setActionOnList( ref childrenToggles, (x) => { x.isOn = true; } );  // activate every Toggle so that the Image below is visible
+
+            while( times-- > 0 ) {
+                setActionOnList(ref childrenImgs, (x) => { x.color = Color.red; }); yield return new WaitForSecondsRealtime( waitTime );
+                setActionOnList(ref childrenImgs, (x) => { x.color = save     ; }); yield return new WaitForSecondsRealtime( waitTime );
+            }
+
+            setActionOnList( ref childrenToggles, (x) => { x.isOn = false; } );  // deactivate every Toggle so that the toggle is "reseted"
+        }
+
+        void setActionOnList<T>(ref T[] typeList, Action<T> dele) {
+            try { foreach(T type in typeList) dele(type); } catch {}
+        }
     #endregion
 
     #region Darstellung des Textes auf dem Computerbildschirm
@@ -286,11 +339,18 @@ public class TextWriter : MonoBehaviour {
             if ( !(contentText is null) ) contentText.text = "";
             if ( !(answerText  is null) ) answerText.text  = "";
         }
+        
+        void playSound(SOUND sound) {
+            Sound s = Array.Find<Sound>(sounds, (ss) => { return ss.name == sound;} );
 
-        void playTypeSound(bool state) {
-            typing = state;
-            if ( typing ) audioSource.Play();
-            else if ( audioSource.isPlaying ) audioSource.Stop();
+            audioSource.clip = s.clip;
+            audioSource.loop = s.oneShot ? false : true;
+
+            audioSource.Play();
+
+            if ( s.name == SOUND.typing ) {
+                if ( !(typing = !typing) ) audioSource.Stop();
+            }
         }
 
         /// Methode zum Anzeigen von den jetztigen Segment Texten nacheinander
@@ -323,10 +383,10 @@ public class TextWriter : MonoBehaviour {
             // iterate thru every channel listed
             for (int i=0; i<channelsNames.Length; i++) {
                 //: hold Coroutine until channel does exist and can be written to
-                while ( channelDictonary[channelsNames[i]] is null )
-                    yield return new WaitForSeconds(0.01f);
+                yield return new WaitWhile( () => channelDictonary[channelsNames[i]] is null || audioSource.isPlaying );
 
-                playTypeSound(true);
+                playSound(SOUND.typing);
+
                 TMP_Text curChannel = channelDictonary[channelsNames[i]];
                 
                 // Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugefügt
@@ -334,9 +394,10 @@ public class TextWriter : MonoBehaviour {
                     curChannel.text += letter;                    
                     yield return new WaitForSeconds(charWaitSeconds);  // Es wird gewartet; Wartedauer = Tippgeschwindigkeit
                 }
+
+                playSound(SOUND.typing);
             }
 
-            playTypeSound(false);
             if ( activateAnsObj && !(answerGameObj is null) ) answerGameObj.SetActive(true);  // Aktiviere das AnswerObjekt, wenn es existiert
         }
     #endregion
