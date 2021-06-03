@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 
 [Serializable]
 public class Content : MonoBehaviour {
-    string jsonPath, yandere;
+    string? jsonPath;
     public const string filename = "Text_Content.json";
     
     Dictionary<uint, TextSegment> textDict = new Dictionary<uint, TextSegment>();
@@ -92,17 +92,17 @@ public class TextSegment {
 [Serializable]
 public class Answer {
     public bool      isMultipleChoice;  /// indicating of this Answer instance is a single sentence or multiple Choice Answer
-    public string?   singleAnswer;      /// single Answer Sentence which is to be expected
+    public SingleAnswer? singleAnswer;      /// single Answer Sentence which is to be expected
     public Choice?[] multipleChoices;   /// Multiple Choice Answer which is to be expected
 
-    public Answer(bool iMC, string? sA=null, Choice?[] mCs=null) {
+    public Answer(bool iMC, SingleAnswer? sA=null, Choice?[] mCs=null) {
         isMultipleChoice = iMC;
         singleAnswer     = sA;
         multipleChoices  = mCs;
     }
 
     public override string ToString() {
-        if(!isMultipleChoice) return $"\tsingleAnswer: {singleAnswer}";
+        if(!isMultipleChoice) return singleAnswer.ToString();
         else {
             string output = "\tChoice: [\n\t\t";
             foreach(Choice choi in multipleChoices) output += choi.ToString() + ";\n\t\t";
@@ -112,11 +112,25 @@ public class Answer {
 }
 
 [Serializable]
+public class SingleAnswer {
+    public string singleAnswer;
+    public KeyboardMode mode;
+
+    public SingleAnswer(string sA, KeyboardMode m) {
+        singleAnswer = sA; mode = m;
+    }
+
+    public override string ToString() {
+        return $"\tsingleAnswer: {singleAnswer}, mode: {mode}";
+    }
+}
+
+[Serializable]
 public class Choice {
     public string sentence;  /// displays an Text which the user can select
     public bool isCorrect;   /// determins if this Choice is to be selected (i.e. correct) or not 
 
-    public Choice(string s, bool i){
+    public Choice(string s, bool i) {
         sentence=s; isCorrect=i;
     }
 

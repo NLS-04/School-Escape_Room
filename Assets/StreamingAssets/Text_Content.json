@@ -29,7 +29,10 @@
             "textAnswer": "yesn't?:",
             "answer": {
                 "isMultipleChoice": false,
-                "singleAnswer": "Test1",
+                "singleAnswer": {
+                    "singleAnswer": "123",
+                    "mode": 0
+                },
                 "multipleChoices": []
             }
         },
@@ -39,7 +42,10 @@
             "textAnswer": "Besste Schule ODER?:",
             "answer": {
                 "isMultipleChoice": false,
-                "singleAnswer": "JA",
+                "singleAnswer": {
+                    "singleAnswer": "ff",
+                    "mode": 1
+                },
                 "multipleChoices": []
             }
         },

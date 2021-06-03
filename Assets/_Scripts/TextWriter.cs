@@ -36,9 +36,12 @@ public class TextWriter : MonoBehaviour {
     [SerializeField] MCToggle?[] mcAnswers     = null;  /// Hodling the refrences to the multiple Choice Answers
     [SerializeField] Button?     checkButton   = null;  /// Button which validates user input or turns pages
 
+    [SerializeField] keyboardHandler? keyBHandler = null;  /// Script for single Answer scene which controls the Keyboard IO
+
     /// a look-up-table for contentText and answerText
     /// Coroutine<Type> looks this up and waits (if needed) until the selected channel is not null anymore, i.e. when the channel has a refrence in the current Scene
-    Dictionary<string, TMP_Text?> channelDictonary = new Dictionary<string, TMP_Text?>(2) { {"contentText", null}, {"answerText", null} };
+    public enum TEXT { contentText, answerText }
+    Dictionary<TEXT, TMP_Text?> channelDictonary = new Dictionary<TEXT, TMP_Text?>(2) { {TEXT.contentText, null}, {TEXT.answerText, null} };
 
 
     [Space, Header("Script Specifics")]
@@ -46,7 +49,6 @@ public class TextWriter : MonoBehaviour {
     [SerializeField] AudioSource audioSource;
     [SerializeField] BatteryManager battManager;
     [SerializeField] GameObject MultipleChoiceObj;
-    // [SerializeField] Json;
 
 
     [Space, Header("State Indecators")]
@@ -55,13 +57,14 @@ public class TextWriter : MonoBehaviour {
     [SerializeField] Content contents;      /// contents for the Scenes containing the riddles
     bool isTextAnswer;                      /// indicates whether the current Segment is multiple or single Answer
 
+    bool isInWrongAnswerMC = false;
 
     #region Scene management
         public static class TAG {
-            public const string CONTENT_TEXT    = "ContentText";
-            public const string ANSWER_TEXT     = "AnswerText";
-            public const string ANSWER_GAMEOBJ  = "AnswerGameObj";
-            public const string MULTIPLE_CHOICE = "MultipleChoice";
+            public const string CONTENT_TEXT     = "ContentText";
+            public const string ANSWER_TEXT      = "AnswerText";
+            public const string ANSWER_GAMEOBJ   = "AnswerGameObj";
+            public const string MULTIPLE_CHOICE  = "MultipleChoice";
         }
 
         //* static variables indicating in wich Scene/State we currently are
@@ -114,12 +117,11 @@ public class TextWriter : MonoBehaviour {
     void initiateLoadLevel(int? index=null) {
         // load Scene and set (every 'instance') of Scene relevant Objects to NULL, e.g. contentText, answerText
         SceneManager.LoadScene( index is null ? (int) SCENE_IDENTIFIER : (int) index );
-        channelDictonary["contentText"] = contentText = null;
-        channelDictonary["answerText"]  = answerText  = null;
+        channelDictonary[TEXT.contentText] = contentText = null;
+        channelDictonary[TEXT.answerText]  = answerText  = null;
         answerGameObj = mcAnsGameObj = null;
         mcAnswers     = null;
-        checkButton   = null;
-        
+        checkButton   = null;        
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -133,13 +135,14 @@ public class TextWriter : MonoBehaviour {
         void getSceneRelevantObj() {
             answerGameObj = GameObject.FindWithTag( TAG.ANSWER_GAMEOBJ );
 
-            channelDictonary["contentText"] = contentText = tmpTextOrNull( TAG.CONTENT_TEXT );  //* add the Scenes current contentTexts: TMPText Component or NULL
-            channelDictonary["answerText"]  = answerText  = tmpTextOrNull( TAG.ANSWER_TEXT );   //* add the Scenes current answerTexts: TMPText Component or NULL
+            channelDictonary[TEXT.contentText] = contentText = tmpTextOrNull( TAG.CONTENT_TEXT );  //* add the Scenes current contentTexts: TMPText Component or NULL
+            channelDictonary[TEXT.answerText]  = answerText  = tmpTextOrNull( TAG.ANSWER_TEXT );   //* add the Scenes current answerTexts: TMPText Component or NULL
 
             if (answerGameObj is null)
                 return; //=> break HERE out if there is NO AnwerGameObj in this scene and (so no button can be set an onClick.Event)
 
             checkButton = answerGameObj.GetComponentInChildren<Button>();
+            keyBHandler = answerGameObj.GetComponent<keyboardHandler>();
 
             answerGameObj.SetActive(activateAnsObjOnLoad);  //? keep an eye on that thingy: wont allways deactivate then the Story_Scene loads up the first time
 
@@ -148,6 +151,9 @@ public class TextWriter : MonoBehaviour {
                 // set battManager depending on the whether it was not yet started or in a Scene Change
                 if ( !battManager.countdownStarted ) battManager.setup(this);
                 if (  battManager.isInSceneSwitch  ) battManager.endSceneChange();
+
+                if ( SCENE_IDENTIFIER == SCENE.SINGLE_ANSWER )
+                    keyBHandler.currentKeyMode = segment.answer.singleAnswer.mode;
 
                 checkButton.onClick.AddListener( checkAnswer );
             } else {
@@ -234,6 +240,11 @@ public class TextWriter : MonoBehaviour {
         void segmentReset() {
             if ( answerGameObj is null ) return; //=> break out HERE, this case only happend then we enter the GAME_END_SCENE 
 
+            if ( SCENE_IDENTIFIER == SCENE.SINGLE_ANSWER ) {
+                keyBHandler.currentKeyMode = segment.answer.singleAnswer.mode;
+                keyBHandler.resetTexts();
+            }
+                
             answerGameObj.SetActive(false);
             clearText();
             writeSegment( true );
@@ -262,21 +273,22 @@ public class TextWriter : MonoBehaviour {
             playSound(SOUND.correct);
             
             if (isTextAnswer) {
-                TMP_InputField inputField = answerGameObj.GetComponentInChildren<TMP_InputField>();
+                TMP_Text[] textFields = answerGameObj.GetComponentsInChildren<TMP_Text>();
+                TMP_Text   textField  = textFields[textFields.Length-1];
                 
                 //* is NOT inputed answer equal to expected answer, disregarding Casings
-                if( ! inputField.text.Equals(segment.answer.singleAnswer, System.StringComparison.CurrentCultureIgnoreCase) ) {
-                    inputField.text = "~ WRONG ~";
+                if( ! textField.text.Equals(segment.answer.singleAnswer.singleAnswer, System.StringComparison.CurrentCultureIgnoreCase) ) {
+                    textField.text = "~ WRONG ~";
                     wrongAnswerAction();
                     return; //=> break HERE out to not futher execute code
                 }
 
-                inputField.text = "";
+                textField.text = "";
             } else {
                 //* scan that every Multiple Choice Answers is correctly selected by the user and return if other wise
                 foreach ( MCToggle mct in mcAnswers ) {
                     if ( !mct.doesInputEqualChoice() ) {
-                        StartCoroutine( multipleChoiceWrongFeedBack() );
+                        if ( !isInWrongAnswerMC ) StartCoroutine( multipleChoiceWrongFeedBack() );
                         wrongAnswerAction();
                         return; //=> break HERE out to not futher execute code
                     }
@@ -315,18 +327,21 @@ public class TextWriter : MonoBehaviour {
         }
 
         IEnumerator multipleChoiceWrongFeedBack( int times=2, float waitTime=0.1f ) {
+            isInWrongAnswerMC = true;
+
             Image[]  childrenImgs    = getMCchildren<Image>();
             Toggle[] childrenToggles = getMCchildren<Toggle>();
             Color save = childrenImgs[0].color;  // Original Color to be reverted to
             
-            setActionOnList( ref childrenToggles, (x) => { x.isOn = true; } );  // activate every Toggle so that the Image below is visible
+            setActionOnList( ref childrenToggles, x => x.isOn = true  );  // activate every Toggle so that the Image below is visible
 
             while( times-- > 0 ) {
-                setActionOnList(ref childrenImgs, (x) => { x.color = Color.red; }); yield return new WaitForSecondsRealtime( waitTime );
-                setActionOnList(ref childrenImgs, (x) => { x.color = save     ; }); yield return new WaitForSecondsRealtime( waitTime );
+                setActionOnList(ref childrenImgs, x => x.color = Color.red ); yield return new WaitForSecondsRealtime( waitTime );
+                setActionOnList(ref childrenImgs, x => x.color = save      ); yield return new WaitForSecondsRealtime( waitTime );
             }
 
-            setActionOnList( ref childrenToggles, (x) => { x.isOn = false; } );  // deactivate every Toggle so that the toggle is "reseted"
+            setActionOnList( ref childrenToggles, x => x.isOn = false  );  // deactivate every Toggle so that the toggle is "reseted"
+            isInWrongAnswerMC = false;
         }
 
         void setActionOnList<T>(ref T[] typeList, Action<T> dele) {
@@ -357,37 +372,37 @@ public class TextWriter : MonoBehaviour {
         void writeSegment(bool activateAnsObj=false) {
             StartCoroutine( Type(
                 new string[2] {segment.content, segment.textAnswer},
-                new string[2] {"contentText", "answerText"},
+                new TEXT[2]   {TEXT.contentText, TEXT.answerText},
                 activateAnsObj: activateAnsObj
             ) );
         }
 
         /// Methode zum Anzeigen eines Texten im contentText
         void writeContent(string text, bool activateAnsObj=false) {
-            writeText(text, "contentText", activateAnsObj: activateAnsObj);
+            writeText(text, TEXT.contentText, activateAnsObj: activateAnsObj);
         }
 
         /// Methode zum Anzeigen von einem einzelnen Text auf einem Channel
-        void writeText(string text, string txtchannel, bool activateAnsObj=false) {
-            StartCoroutine( Type( new string[1] {text}, new string[1] {txtchannel}, activateAnsObj:activateAnsObj ) );
+        void writeText(string text, TEXT txtchannel, bool activateAnsObj=false) {
+            StartCoroutine( Type( new string[1] {text}, new TEXT[1] {txtchannel}, activateAnsObj:activateAnsObj ) );
         }
 
         /// Coroutine, die für die eigentliche Darstellung des Textes verantwortlich ist.
-        IEnumerator Type( string[] texts, string[] channelsNames, bool activateAnsObj=false ){
-            if ( channelsNames.Length == 0 )            yield return null; //=> break HERE: No Channels given
-            if ( texts.Length != channelsNames.Length ) yield return null; //=> break HERE: Channels and Texts doesnt match
+        IEnumerator Type( string[] texts, TEXT[] channels, bool activateAnsObj=false ){
+            if ( channels.Length == 0 )            yield return null; //=> break HERE: No Channels given
+            if ( texts.Length != channels.Length ) yield return null; //=> break HERE: Channels and Texts doesnt match
 
             // calculate seconds to wait between two chars foreach time Type gets called => inspector adjustment ability
             charWaitSeconds = (float) 1/charFrequency;
             
             // iterate thru every channel listed
-            for (int i=0; i<channelsNames.Length; i++) {
+            for (int i=0; i<channels.Length; i++) {
                 //: hold Coroutine until channel does exist and can be written to
-                yield return new WaitWhile( () => channelDictonary[channelsNames[i]] is null || audioSource.isPlaying );
+                yield return new WaitWhile( () => channelDictonary[channels[i]] is null || audioSource.isPlaying );
 
                 playSound(SOUND.typing);
 
-                TMP_Text curChannel = channelDictonary[channelsNames[i]];
+                TMP_Text curChannel = channelDictonary[channels[i]];
                 
                 // Es wird durch die einzelnen Zeichen des Textes durchiteriert und dann zum bisher angezeigten Text hinzugefügt
                 foreach (char letter in texts[i].ToCharArray()) {
