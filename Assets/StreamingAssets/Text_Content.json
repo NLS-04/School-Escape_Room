@@ -2,35 +2,25 @@
     "segments": [
         {
             "id": 1,
-            "content": "Content_2",
-            "textAnswer": "textAnswer_2",
-            "answer": {
-                "isMultipleChoice": true,
-                "singleAnswer": "",
-                "multipleChoices": [
-                    {
-                        "sentence": "ChoiceSentence_1",
-                        "isCorrect": true
-                    },
-                    {
-                        "sentence": "ChoiceSentence_2",
-                        "isCorrect": false
-                    },
-                    {
-                        "sentence": "ChoiceSentence_3",
-                        "isCorrect": true
-                    }
-                ]
-            }
-        },
-        {
-            "id": 4,
-            "content": "Der Hohmann-Transfer ist ein energetisch günstiger Übergang zwischen zwei Bahnen um einen dominierenden Himmelskörper. Die Transfer-Ellipse (Hohmann-Bahn) verläuft sowohl zur Ausgangsbahn als auch zur Zielbahn tangential; dort ist jeweils ein Kraftstoß (kick burn) nötig, um die Geschwindigkeit anzupassen. Eine solche Skizze findet sich bereits um 1911 bei Ziolkowski.",
-            "textAnswer": "yesn't?:",
+            "content": "Fehler!!!!\nBeim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich! Hinweis: Die verschiedenen Zahlensysteme werden dir helfen!\n\n10000010001 + 49C – 11001000 = ?",
+            "textAnswer": "",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {
-                    "singleAnswer": "123",
+					"singleAnswer": "2021",
+					"mode": 0
+				},
+                "multipleChoices": []
+            }
+        },
+        {
+            "id": 2,
+            "content": "Eine meiner vielen Expeditionen führte mich in ein abgelegenes Bergdorf. Von einem der dort lebenden Menschen erfuhr ich, dass es in dieser Gegend einen alten Tempel geben soll, der mit vielen kostbaren Schätzen gefüllt seien soll. Die Dorfbewohner erzählten mir, dass sich dieser Tempel auf dem höchsten Gipfel in diesem Gebirge befinden soll. Nachdem ich mich die umliegende Landschaft genau studiert habe, stellte ich fest, dass die Bergkette näherungsweise durch die Funktion f dargestellt werden kann.Gebe die x-Koordinate des Gipfels an! Runde dein Ergebnis auf eine Nachkommastelle genau.\n\nf(x)=-0,15x⁴-0,4x³+0,9x²+1,3x+2,7",
+            "textAnswer": "",
+            "answer": {
+                "isMultipleChoice": false,
+                "singleAnswer": {
+                    "singleAnswer": "-2,8",
                     "mode": 0
                 },
                 "multipleChoices": []
@@ -38,34 +28,100 @@
         },
         {
             "id": 3,
-            "content": "Tja das schimmel Gebäude ist einfach der Hammer, wir haben sogar ein schulmaskotchen Yay",
-            "textAnswer": "Besste Schule ODER?:",
-            "answer": {
-                "isMultipleChoice": false,
-                "singleAnswer": {
-                    "singleAnswer": "ff",
-                    "mode": 1
-                },
-                "multipleChoices": []
-            }
-        },
-        {
-            "id": 2,
-            "content": "Content_3",
-            "textAnswer": "textAnswer_3",
+            "content": "Nachdem ich nun wusste wo ich suchen musste, packte ich meine Sachen für die Wanderung zum Gipfel. Ich stand vor der Wahl meiner Ausrüstung. Meine Wanderausrüstung war eher für Touren mit einer weniger steilen Strecken (Steigung zwischen -1 und +1) geeignet. Die Kletterausrüstung brauchte ich nur bei größeren Steigungen. Die Koordinaten des Dorfes sind: D (0/2,7). Die Koordinaten des Gipfels sind aus der vorherigen Aufgabe bekannt (Die y-Koordinate wird ebenfalls auf eine Nachkommastelle gerundet). Entscheide auf Grundlage der durchschnittlichen Steigung der Tour, welche Ausrüstung benötigt wird!",
+            "textAnswer": "",
             "answer": {
                 "isMultipleChoice": true,
                 "singleAnswer": "",
                 "multipleChoices": [
-                    {
-                        "sentence": "ChoiceSentence_1",
-                        "isCorrect": false
-                    },
-                    {
-                        "sentence": "ChoiceSentence_2",
-                        "isCorrect": true
-                    }
-                ]
+					{
+						"sentence": "Wanderausrüstung",
+						"isCorrect": false
+					},
+					{
+						"sentence": "Kletterausrüstung",
+						"isCorrect": true
+					}
+				]
+            }
+        },
+        {
+            "id": 4,
+            "content": "Fehler!\nBeim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich! Gebe deine Lösung im Binärsystem an!\n\n40A + ? = 1234",
+            "textAnswer": "",
+            "answer": {
+                "isMultipleChoice": false,
+                "singleAnswer": {
+					"singleAnswer": "11001000",
+					"mode": 2					
+				},
+                "multipleChoices": []
+            }
+        },
+		{
+            "id": 5,
+            "content": "Eine andere Reise führte mich zu einer weit entfernten Insel in der Südsee. Das dort lebende Volk wurde seit Längerem regelmäßig von Piraten überfallen. Ich half den Bewohner der Insel die Piraten zu vertreiben. Zum Dank schenkten sie mir Land auf ihrer Insel. Sie gaben mir ein 200 m langes Seil mit dem ich mir mein Land abstecken sollte. Ich suchte mir einer Stelle am Strand aus, da ich dort mein Grundstück nur an drei Seiten abstecken musste. Wie groß kann mein Grundstück unter diesen Bedingungen maximal sein? Gebe deine Lösung in dm² an!",
+            "textAnswer": "",
+            "answer": {
+                "isMultipleChoice": false,
+                "singleAnswer": {
+					"singleAnswer": "50",
+					"mode": 0	
+				},
+                "multipleChoices": []
+            }
+        },
+		{
+            "id": 6,
+            "content": "Fehler! Beim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich! Gebe deine Lösung im Hexadezimalsystem an!\n\n100010 + ? = 56",
+            "textAnswer": "",
+            "answer": {
+                "isMultipleChoice": false,
+                "singleAnswer": {
+					"singleAnswer": "16",
+					"mode": 1					
+				},
+                "multipleChoices": []
+            }
+        },
+		{
+            "id": 7,
+            "content": "Vor vielen Jahren entdeckte ich zusammen mit einem guten Freund einen alten Tempel in einem fernen Land. Wir hörten, dass in diesem Tempel viele antike Schätze verborgen sind. Also begannen wir unsere Expedition durch das Jahrhunderte alte Gemäuer. Bald entdeckten wir einen dunklen Raum und mussten schnell feststellen, dass es in diesem viele Fallen aufgestellt wurden. Am Eingang dieses Raums entdeckten wir allerdings einige Hinweise, die uns dabei helfen sollten einen sicheren Weg durch dieses Meer an Fallen zu finden.\n\n- Der Verlauf des sicheren Weges ähnelt dem Verlauf einer ganzrationalen Funktion dritten Grades. (f(x) = ax³+bx²+cx+d)\n- Die Eingangstür liegt auf dem Punkt E (-2|0).\n- Die Ausgangstür liegt auf dem Punkt A (1|3).\n- Die Funktion hat bei -4/3 einen Extrempunkt.\n- Der Funktionsgraph verläuft durch den Ursprung.\nBerechne die Parameter der Funktionsgleichung und wähle anschließend alle richtigen Antwortmöglichkeiten an.",
+            "textAnswer": "",
+            "answer": {
+                "isMultipleChoice": true,
+                "singleAnswer": "",
+                "multipleChoices": [
+					{
+						"sentence": "a = 1",
+						"isCorrect": true
+					},
+					{
+						"sentence": "c = 4",
+						"isCorrect": false
+					},
+					{
+						"sentence": "b = 2",
+						"isCorrect": true
+					},
+					{
+						"sentence": "c = 0",
+						"isCorrect": true
+					}
+				]
+            }
+        },
+		{
+            "id": 8,
+            "content": "Da wir nun den ungefähren Wegverlauf kannten, wollten wir loslaufen. Mein Freund machte mich darauf aufmerksam, dass er den genauen Weg nicht sehen konnten. Er wollte wissen in welche Richtung er laufen musste. Berechne den genauen Winkel unserer Route an der Eingangstür und runde dein Ergebnis auf die nächste ganzzahlige Gradzahl!",
+            "textAnswer": "",
+            "answer": {
+                "isMultipleChoice": false,
+                "singleAnswer": {
+					"singleAnswer": "76",
+					"mode": 0				
+				},
+                "multipleChoices": []
             }
         }
     ]
