@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74650c083437bc4394663901f1719f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charFrequency: 400
+  charFrequency: 50
   charWaitSeconds: 0
   typing: 0
   activateAnsObjOnLoad: 0
@@ -364,6 +364,7 @@ MonoBehaviour:
   mcAnsGameObj: {fileID: 0}
   mcAnswers: []
   checkButton: {fileID: 0}
+  keyBHandler: {fileID: 0}
   sounds:
   - name: 0
     clip: {fileID: 8300000, guid: c5a4003d82dc4174fb8b58b3899dd3b1, type: 3}
@@ -384,7 +385,9 @@ MonoBehaviour:
     textAnswer: 
     answer:
       isMultipleChoice: 0
-      singleAnswer: 
+      singleAnswer:
+        singleAnswer: 
+        mode: 0
       multipleChoices: []
   contents: {fileID: 1457829999}
   SCENE_IDENTIFIER: 0
