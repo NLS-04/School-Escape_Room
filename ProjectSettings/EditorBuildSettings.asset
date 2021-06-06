@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Multiple Answer.unity
     guid: ca8821311d0198d42bc5528ca94142f7
+  - enabled: 1
+    path: Assets/_Scenes/PosStoryScene.unity
+    guid: 7d57b8a17a4ba2d4f9c719e5d83c3d0a
   m_configObjects: {}

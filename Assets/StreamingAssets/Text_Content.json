@@ -2,8 +2,8 @@
     "segments": [
         {
             "id": 1,
-            "content": "Fehler!!!!\nBeim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich! Hinweis: Die verschiedenen Zahlensysteme werden dir helfen!\n\n10000010001 + 49C – 11001000 = ?",
-            "textAnswer": "",
+            "content": "Fehler!!!!\nBeim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich! Hinweis: Die verschiedenen Zahlensysteme werden dir helfen!\n\n0b10000010001 + 0x49C – 0b11001000 = ?\n\nTipp: Präfixe (0b, 0x)\n\n- ohne Präfix sind Dezimalzahlen\n- 0x... sind hexadezimalzahlen\n- 0b... sind Binärzahlen\n\nAntworte stehts ohne Präfix",
+            "textAnswer": "Geben die Anwtort im Dezimalsystem an",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {
@@ -15,8 +15,8 @@
         },
         {
             "id": 2,
-            "content": "Eine meiner vielen Expeditionen führte mich in ein abgelegenes Bergdorf. Von einem der dort lebenden Menschen erfuhr ich, dass es in dieser Gegend einen alten Tempel geben soll, der mit vielen kostbaren Schätzen gefüllt seien soll. Die Dorfbewohner erzählten mir, dass sich dieser Tempel auf dem höchsten Gipfel in diesem Gebirge befinden soll. Nachdem ich mich die umliegende Landschaft genau studiert habe, stellte ich fest, dass die Bergkette näherungsweise durch die Funktion f dargestellt werden kann.Gebe die x-Koordinate des Gipfels an! Runde dein Ergebnis auf eine Nachkommastelle genau.\n\nf(x)=-0,15x⁴-0,4x³+0,9x²+1,3x+2,7",
-            "textAnswer": "",
+            "content": "Eine meiner vielen Expeditionen führte mich in ein abgelegenes Bergdorf. Von einem der dort lebenden Menschen erfuhr ich, dass es in dieser Gegend einen alten Tempel geben soll, der mit vielen kostbaren Schätzen gefüllt seien soll. Die Dorfbewohner erzählten mir, dass sich dieser Tempel auf dem höchsten Gipfel in diesem Gebirge befinden soll. Nachdem ich mich die umliegende Landschaft genau studiert habe, stellte ich fest, dass die Bergkette näherungsweise durch die Funktion f dargestellt werden kann.\n\nf(x)=-0,15x⁴-0,4x³+0,9x²+1,3x+2,7\n\nGebe die x-Koordinate des Gipfels an! ",
+            "textAnswer": "Runde dein Ergebnis auf EINE Nachkommastelle genau.",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {
@@ -28,8 +28,8 @@
         },
         {
             "id": 3,
-            "content": "Nachdem ich nun wusste wo ich suchen musste, packte ich meine Sachen für die Wanderung zum Gipfel. Ich stand vor der Wahl meiner Ausrüstung. Meine Wanderausrüstung war eher für Touren mit einer weniger steilen Strecken (Steigung zwischen -1 und +1) geeignet. Die Kletterausrüstung brauchte ich nur bei größeren Steigungen. Die Koordinaten des Dorfes sind: D (0/2,7). Die Koordinaten des Gipfels sind aus der vorherigen Aufgabe bekannt (Die y-Koordinate wird ebenfalls auf eine Nachkommastelle gerundet). Entscheide auf Grundlage der durchschnittlichen Steigung der Tour, welche Ausrüstung benötigt wird!",
-            "textAnswer": "",
+            "content": "Nachdem ich nun wusste wo ich suchen musste, packte ich meine Sachen für die Wanderung zum Gipfel. Ich stand vor der Wahl meiner Ausrüstung. Meine Wanderausrüstung war eher für Touren mit einer weniger steilen Strecken (Steigung zwischen -1 und +1) geeignet. Die Kletterausrüstung brauchte ich nur bei größeren Steigungen. Die Koordinaten des Dorfes sind: D (0/2,7). Die Koordinaten des Gipfels sind aus der vorherigen Aufgabe bekannt (Die y-Koordinate wird ebenfalls auf eine Nachkommastelle gerundet).",
+            "textAnswer": "Entscheide auf Grundlage der durchschnittlichen Steigung der Tour, welche Ausrüstung benötigt wird!",
             "answer": {
                 "isMultipleChoice": true,
                 "singleAnswer": "",
@@ -47,8 +47,8 @@
         },
         {
             "id": 4,
-            "content": "Fehler!\nBeim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich! Gebe deine Lösung im Binärsystem an!\n\n40A + ? = 1234",
-            "textAnswer": "",
+            "content": "Fehler!\nBeim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich!\n\n  0x40A + 0b? = 1234",
+            "textAnswer": "Gebe deine Lösung im Binärsystem an!\n(Hinweis: Die Zahl ist 8-bit groß)",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {
@@ -60,8 +60,8 @@
         },
 		{
             "id": 5,
-            "content": "Eine andere Reise führte mich zu einer weit entfernten Insel in der Südsee. Das dort lebende Volk wurde seit Längerem regelmäßig von Piraten überfallen. Ich half den Bewohner der Insel die Piraten zu vertreiben. Zum Dank schenkten sie mir Land auf ihrer Insel. Sie gaben mir ein 200 m langes Seil mit dem ich mir mein Land abstecken sollte. Ich suchte mir einer Stelle am Strand aus, da ich dort mein Grundstück nur an drei Seiten abstecken musste. Wie groß kann mein Grundstück unter diesen Bedingungen maximal sein? Gebe deine Lösung in dm² an!",
-            "textAnswer": "",
+            "content": "Eine andere Reise führte mich zu einer weit entfernten Insel in der Südsee. Das dort lebende Volk wurde seit Längerem regelmäßig von Piraten überfallen. Ich half den Bewohner der Insel die Piraten zu vertreiben. Zum Dank schenkten sie mir Land auf ihrer Insel. Sie gaben mir ein 200 m langes Seil mit dem ich mir mein Land abstecken sollte. Ich suchte mir einer Stelle am Strand aus, da ich dort mein Grundstück nur an drei Seiten abstecken musste.",
+            "textAnswer": "Wie groß kann mein Grundstück unter diesen Bedingungen maximal sein? Gebe deine Lösung in dm² an!",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {
@@ -73,12 +73,12 @@
         },
 		{
             "id": 6,
-            "content": "Fehler! Beim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich! Gebe deine Lösung im Hexadezimalsystem an!\n\n100010 + ? = 56",
-            "textAnswer": "",
+            "content": "Fehler! Beim Öffnen der Datei ist ein schwerwiegender Fehler aufgetreten! Codeeingabe für die erfolgreiche Entschlüsselung der Datei erforderlich!\n\n  0b11010 + 0x? = 56",
+            "textAnswer": "Gebe deine Lösung im Hexadezimalsystem an!",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {
-					"singleAnswer": "16",
+					"singleAnswer": "1E",
 					"mode": 1					
 				},
                 "multipleChoices": []
@@ -86,8 +86,8 @@
         },
 		{
             "id": 7,
-            "content": "Vor vielen Jahren entdeckte ich zusammen mit einem guten Freund einen alten Tempel in einem fernen Land. Wir hörten, dass in diesem Tempel viele antike Schätze verborgen sind. Also begannen wir unsere Expedition durch das Jahrhunderte alte Gemäuer. Bald entdeckten wir einen dunklen Raum und mussten schnell feststellen, dass es in diesem viele Fallen aufgestellt wurden. Am Eingang dieses Raums entdeckten wir allerdings einige Hinweise, die uns dabei helfen sollten einen sicheren Weg durch dieses Meer an Fallen zu finden.\n\n- Der Verlauf des sicheren Weges ähnelt dem Verlauf einer ganzrationalen Funktion dritten Grades. (f(x) = ax³+bx²+cx+d)\n- Die Eingangstür liegt auf dem Punkt E (-2|0).\n- Die Ausgangstür liegt auf dem Punkt A (1|3).\n- Die Funktion hat bei -4/3 einen Extrempunkt.\n- Der Funktionsgraph verläuft durch den Ursprung.\nBerechne die Parameter der Funktionsgleichung und wähle anschließend alle richtigen Antwortmöglichkeiten an.",
-            "textAnswer": "",
+            "content": "Vor vielen Jahren entdeckte ich zusammen mit einem guten Freund einen alten Tempel in einem fernen Land. Wir hörten, dass in diesem Tempel viele antike Schätze verborgen sind. Also begannen wir unsere Expedition durch das Jahrhunderte alte Gemäuer. Bald entdeckten wir einen dunklen Raum und mussten schnell feststellen, dass es in diesem viele Fallen aufgestellt wurden. Am Eingang dieses Raums entdeckten wir allerdings einige Hinweise, die uns dabei helfen sollten einen sicheren Weg durch dieses Meer an Fallen zu finden.\n\n- Der Verlauf des sicheren Weges ähnelt dem Verlauf einer ganzrationalen Funktion dritten Grades. (f(x) = ax³+bx²+cx+d)\n- Die Eingangstür liegt auf dem Punkt E (-2|0).\n- Die Ausgangstür liegt auf dem Punkt A (1|3).\n- Die Funktion hat bei -4/3 einen Extrempunkt.\n- Der Funktionsgraph verläuft durch den Ursprung.",
+            "textAnswer": "Berechne die Parameter der Funktionsgleichung und wähle anschließend alle richtigen Antwortmöglichkeiten an.",
             "answer": {
                 "isMultipleChoice": true,
                 "singleAnswer": "",
@@ -113,8 +113,8 @@
         },
 		{
             "id": 8,
-            "content": "Da wir nun den ungefähren Wegverlauf kannten, wollten wir loslaufen. Mein Freund machte mich darauf aufmerksam, dass er den genauen Weg nicht sehen konnten. Er wollte wissen in welche Richtung er laufen musste. Berechne den genauen Winkel unserer Route an der Eingangstür und runde dein Ergebnis auf die nächste ganzzahlige Gradzahl!",
-            "textAnswer": "",
+            "content": "Da wir nun den ungefähren Wegverlauf kannten, wollten wir loslaufen. Mein Freund machte mich darauf aufmerksam, dass er den genauen Weg nicht sehen konnten. Er wollte wissen in welche Richtung er laufen musste.\n\nBerechne den genauen Winkel unserer Route an der Eingangstür",
+            "textAnswer": "Runde dein Ergebnis auf die nächste ganzzahlige Gradzahl!",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {

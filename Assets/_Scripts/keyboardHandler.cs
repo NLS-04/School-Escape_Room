@@ -79,6 +79,7 @@ public class keyboardHandler : MonoBehaviour {
 
     public void resetTexts(string txt="Hier deine Antwort eingeben") {
         inputField.text = txt;
+        controlField.text = txt;
         inputText = "";
     }
 }

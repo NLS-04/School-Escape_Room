@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class BatteryManager : MonoBehaviour
-{
+public class BatteryManager : MonoBehaviour {
     public float battery_percentage       = default_batt_percentage;  /// Der Ladestand der Batterie
     static float default_batt_percentage  = 100f;                     /// Standart, initial, start Prozentstand
-    static float time_per_percent         = 20f;                      /// Die Zeit in Sekunden, die es dauert bis sich der Batterieladestand um 1 verringert
-    static float percent_per_wrong_answer = 5f;                       /// Procentverlust der Batterie bei einer falschen Antwort
+    static float time_per_percent         = 18f;                      /// Die Zeit in Sekunden, die es dauert bis sich der Batterieladestand um 1 verringert
+    static float percent_per_wrong_answer = 60f/time_per_percent;     /// Procentverlust der Batterie bei einer falschen Antwort
 
     public bool countdownStarted = false;  /// Gibt an, ob die Entladung der Batterie gestartet ist (mit Beginn des ersten Rätsels)
     public bool isInSceneSwitch  = false;  /// if we need to switch between single and multiple Answer Scenes we need to prevent accessing Scene relevant Objects

@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using System.Linq;
 
 [Serializable]
 public class Sound {
@@ -77,6 +76,7 @@ public class TextWriter : MonoBehaviour {
             GAME_OVER       = 4,  /// Scene where the game pre ends due to an empty battery
             SINGLE_ANSWER   = 5,  /// Scene for Single Answer Segments
             MULTIPLE_ANSWER = 6,  /// Scene for Multiple Choise Answer Segments
+            POS_STORY_SCENE = 7,  /// Scene last story paragraph
 
                 //! GAME_ENEDED MUST be {10*GAME_OVER} since they point to the same SCENE
                 //! but MUSTN'T be the same or else SCENE_CONTENTS can't distinguish between them
@@ -86,15 +86,21 @@ public class TextWriter : MonoBehaviour {
         static int _sceneAmount = Enum.GetNames(typeof(SCENE)).Length;  // the amount of referendable scenes, e.g MAIN_MENU, ...
 
         public static readonly Dictionary<SCENE, string> SCENE_CONTENTS = new Dictionary<SCENE, string>(_sceneAmount) {
-            { SCENE.MAIN_MENU ,     "Willkommen bei Spielname XY!" },
+            { SCENE.MAIN_MENU ,     "Willkommen bei der mathematischen Schatzsuche!" },
             { SCENE.GAME_OVER ,     "Game Over!" },
-            { SCENE.GAME_ENDED,     "Herzlichen Glückwunsch!\n\nDu hast alle Rätsel erfolgreich absolviert und gezeigt,\ndass du dich in den mathematischen Künsten der 11. Jahrgangsstufe bewähren kannst" },
-            { SCENE.EMPTY_SCREEN,   "Hallo Fremder! Wenn du das hier liest, bin ich längst tot. Ich war viele Jahre ein erfolgreicher Abenteurer und Entdecker. Die Schätze, die ich auf diesen Reisen gefunden habe, möchte ich einer Person vererben die, dieser Schätze würdig ist. Dafür habe ich dich ausgesucht. Die Schätze sind irgendwo in diesem Haus versteckst. Bevor du sie aber erhältst musst du dich in mehreren Prüfungen und Rätseln beweisen. Dieser Computer (und die in der Kiste liegenden Unterlagen) werden dir dabei helfen die Prüfungen zu bestehen. Bedenke, dass sowohl deine Zeit als auch deine Lösungsversuche durch die Batterie dieses Computers begrenzt sind. Viel Glück!" }
+            { SCENE.GAME_ENDED,     "Herzlichen Glückwunsch!\nDu hast alle Prüfungen erfolgreich gemeistert und hast dich damit als würdig erwiesen meinen Schatz zu erben. Du findest ihn in der Küche im Erdgeschoss des Hauses unter dem alten Holzboden. Ich wünsche dir viel Spaß damit!" },
+            { SCENE.EMPTY_SCREEN,   "Hallo Fremder! Wenn du das hier liest, bin ich längst tot. Ich war viele Jahre ein erfolgreicher Abenteurer und Entdecker. Die Schätze, die ich auf diesen Reisen gefunden habe, möchte ich einer Person vererben die, dieser Schätze würdig ist. Dafür habe ich dich ausgesucht. Die Schätze sind irgendwo in diesem Haus versteckst. Bevor du sie aber erhältst musst du dich in mehreren Prüfungen und Rätseln beweisen. Dieser Computer (und die in der Kiste liegenden Unterlagen) werden dir dabei helfen die Prüfungen zu bestehen. Bedenke, dass sowohl deine Zeit als auch deine Lösungsversuche durch die Batterie dieses Computers begrenzt sind. Viel Glück!" },
+            { SCENE.POS_STORY_SCENE,"Du bist erleichtert, dass du die Prüfungen deines Verwandten bestanden hast. Nach einer kurzen Verschnaufpause, stehst du auf und rennst so schnell du kannst in die Küche der alten Villa. Schnell hast du unter dem alten Boden ein Geheimfach entdeckt. Du ziehst aus dem Fach eine staubige Holzkiste. Welche kostbaren Schätze werden da wohl drinnen sein? Du öffnest mit großer Vorfreude den Verschluss der Kiste … Statt Reichtümern aus entfernten Ländern befinden sich in der Kiste bloß ein Stapel uralter Mathe-Bücher." }
         };
+
         public static readonly string[] STORY_CONTENTS = {
             "Vor ein paar Tagen erhieltst du überraschend ein Schreiben. Zuerst dachtest du, dass dieser Brief ein Fehler war, denn es wurde dir mitgeteilt, dass einer deiner entfernten Verwandten verstorben war und dass du damit der Erbe eines alten Hauses geworden bist. Da dir der Name dieser Person unbekannt ist, triffst du die Entscheidung das Haus dieses mysteriösen Verwandten zu besuchen um mehr über diesen Menschen herauszufinden.",
             "Kurze Zeit später stehst du vor einer alten, verwahrlosten Villa am Stadtrand. Kaum vorstellbar, dass hier bis vor kurzem noch jemand gewohnt hat! Als du das Haus betrittst stellst du überrascht fest, dass das Haus komplett leer ist. In keinem Raum der Villa stehen Möbel oder Gegenstände deines vermeintlichen Verwandten. Nachdem du alle Räum durchsucht hast, entscheidest du dich noch einen Blick auf den Dachboden zu werfen. Als du den Dachboden erreichst, dachtest du im ersten Moment, dass auch dieser vollkommen leer ist. Jedoch entdeckst du in einer Ecke des beengten Raums eine große Holztruhe.",
             "Du näherst dich der Kiste und öffnest den schweren Deckel. Mit großer Überraschung begutachtest du den Inhalt. Neben einem Stapel von alten Dokumenten befindet sich in der Truhe ein alter Computer der über ein Netz aus Kabeln mit einer überdimensionalen Batterie verbunden ist. Du hebst den Computer aus der Kiste und stellt ihn auf den knarzenden Holzboden. Nach einer kurzen Suche findest du an dem grauen Kasten einen Einschaltknopf. Als du die Taste drückst fängt der Computer an zu Surren und zeigt auf seinem Bildschirm eine Botschaft deines Verwandten an…"
+        };
+
+        public static readonly string[] POS_STORY_CONTENTS = {
+            "Du bist erleichtert, dass du die Prüfungen deines Verwandten bestanden hast. Nach einer kurzen Verschnaufpause, stehst du auf und rennst so schnell du kannst in die Küche der alten Villa. Schnell hast du unter dem alten Boden ein Geheimfach entdeckt. Du ziehst aus dem Fach eine staubige Holzkiste. Welche kostbaren Schätze werden da wohl drinnen sein? Du öffnest mit großer Vorfreude den Verschluss der Kiste … Statt Reichtümern aus entfernten Ländern befinden sich in der Kiste bloß ein Stapel uralter Mathe-Bücher."
         };
 
         [SerializeField] 
@@ -218,10 +224,11 @@ public class TextWriter : MonoBehaviour {
             } else {
                 //: Current Scene is not the story Scene ==> Switch to according Scene
                 switch( SCENE_IDENTIFIER ) {
-                    case SCENE.MAIN_MENU:    SCENE_IDENTIFIER = SCENE.STORY;     break;
-                    case SCENE.GAME_OVER:    SCENE_IDENTIFIER = SCENE.MAIN_MENU; break;
-                    case SCENE.GAME_ENDED:   SCENE_IDENTIFIER = SCENE.MAIN_MENU; break;
-                    case SCENE.EMPTY_SCREEN: segmentChoice( 1 ); break;  // 'preview' the first scene to setup the segment data and the current state
+                    case SCENE.MAIN_MENU:       SCENE_IDENTIFIER = SCENE.STORY;           break;
+                    case SCENE.GAME_OVER:       SCENE_IDENTIFIER = SCENE.MAIN_MENU;       break;
+                    case SCENE.GAME_ENDED:      SCENE_IDENTIFIER = SCENE.POS_STORY_SCENE; break;
+                    case SCENE.EMPTY_SCREEN:    segmentChoice( 1 );                       break;  // 'preview' the first scene to setup the segment data and the current state
+                    case SCENE.POS_STORY_SCENE: SCENE_IDENTIFIER = SCENE.MAIN_MENU;       break;
                 }
             }
 
