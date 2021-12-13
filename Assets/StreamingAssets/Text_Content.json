@@ -15,7 +15,7 @@
         },
         {
             "id": 2,
-            "content": "Eine meiner vielen Expeditionen führte mich in ein abgelegenes Bergdorf. Von einem der dort lebenden Menschen erfuhr ich, dass es in dieser Gegend einen alten Tempel geben soll, der mit vielen kostbaren Schätzen gefüllt seien soll. Die Dorfbewohner erzählten mir, dass sich dieser Tempel auf dem höchsten Gipfel in diesem Gebirge befinden soll. Nachdem ich mich die umliegende Landschaft genau studiert habe, stellte ich fest, dass die Bergkette näherungsweise durch die Funktion f dargestellt werden kann.\n\nf(x)=-0,15x⁴-0,4x³+0,9x²+1,3x+2,7\n\nGebe die x-Koordinate des Gipfels an! ",
+            "content": "Eine meiner vielen Expeditionen führte mich in ein abgelegenes Bergdorf. Von einem der dort lebenden Menschen erfuhr ich, dass es in dieser Gegend einen alten Tempel geben soll, der mit vielen kostbaren Schätzen gefüllt seien soll. Die Dorfbewohner erzählten mir, dass sich dieser Tempel auf dem höchsten Gipfel in diesem Gebirge befinden soll. Nachdem ich mich die umliegende Landschaft genau studiert habe, stellte ich fest, dass die Bergkette näherungsweise durch die Funktion f dargestellt werden kann.\n\nf(x)=-0,15x⁴-0,4x³+0,9x²+1,3x+2,7\n\nGebe die x-Koordinate des Gipfels an!\n\n(Tipp: Newton-Verfahren)",
             "textAnswer": "Runde dein Ergebnis auf EINE Nachkommastelle genau.",
             "answer": {
                 "isMultipleChoice": false,
@@ -61,7 +61,7 @@
 		{
             "id": 5,
             "content": "Eine andere Reise führte mich zu einer weit entfernten Insel in der Südsee. Das dort lebende Volk wurde seit Längerem regelmäßig von Piraten überfallen. Ich half den Bewohner der Insel die Piraten zu vertreiben. Zum Dank schenkten sie mir Land auf ihrer Insel. Sie gaben mir ein 200 m langes Seil mit dem ich mir mein Land abstecken sollte. Ich suchte mir einer Stelle am Strand aus, da ich dort mein Grundstück nur an drei Seiten abstecken musste.",
-            "textAnswer": "Wie groß kann mein Grundstück unter diesen Bedingungen maximal sein? Gebe deine Lösung in dm² an!",
+            "textAnswer": "Wie groß kann mein Grundstück unter diesen Bedingungen maximal sein? Gebe deine Lösung in Ar an!",
             "answer": {
                 "isMultipleChoice": false,
                 "singleAnswer": {
